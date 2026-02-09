@@ -60,6 +60,27 @@
             }
         }
 
+        @keyframes swing {
+            0%, 100% {
+                transform: rotate(-5deg);
+            }
+            50% {
+                transform: rotate(5deg);
+            }
+        }
+
+        .character-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .character {
+            width: 150px;
+            height: auto;
+            animation: swing 2s ease-in-out infinite;
+            transform-origin: bottom center;
+        }
+
         h1 {
             color: #333;
             font-size: 32px;
@@ -269,6 +290,10 @@
             .recommendation h3 {
                 font-size: 20px;
             }
+
+            .character {
+                width: 120px;
+            }
         }
     </style>
 </head>
@@ -280,6 +305,9 @@
 
         <!-- 시작 화면 -->
         <div class="question-container active" id="intro">
+            <div class="character-container">
+                <img src="character.jpg" alt="삼천리 캐릭터" class="character">
+            </div>
             <h1>📰 당신을 위한 삼천리 사보 칼럼을 추천해 드립니다!</h1>
             <p class="intro-text">
                 간단한 질문에 답하시면<br>
