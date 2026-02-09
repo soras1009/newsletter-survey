@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>사보 맞춤 추천 설문</title>
+    <title>삼천리 사보 맞춤 추천 설문</title>
     <style>
         * {
             margin: 0;
@@ -13,27 +13,19 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background: white;
             padding: 20px;
         }
 
         .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 600px;
+            max-width: 800px;
             width: 100%;
-            padding: 40px;
-            position: relative;
+            margin: 0 auto;
         }
 
         .progress-bar {
             width: 100%;
-            height: 8px;
+            height: 10px;
             background: #e0e0e0;
             border-radius: 10px;
             margin-bottom: 30px;
@@ -70,7 +62,7 @@
 
         h1 {
             color: #333;
-            font-size: 28px;
+            font-size: 32px;
             margin-bottom: 15px;
             text-align: center;
         }
@@ -78,37 +70,38 @@
         .intro-text {
             text-align: center;
             color: #666;
-            margin-bottom: 30px;
-            line-height: 1.6;
+            margin-bottom: 40px;
+            line-height: 1.8;
+            font-size: 16px;
         }
 
         .question-number {
             color: #667eea;
             font-weight: bold;
-            font-size: 14px;
-            margin-bottom: 10px;
+            font-size: 16px;
+            margin-bottom: 15px;
         }
 
         .question-text {
             color: #333;
-            font-size: 22px;
+            font-size: 26px;
             font-weight: 600;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             line-height: 1.4;
         }
 
         .options {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
         }
 
         .option-btn {
             background: #f8f9fa;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            padding: 20px;
-            font-size: 16px;
+            border: 3px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 25px 30px;
+            font-size: 18px;
             color: #333;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -131,8 +124,8 @@
         .option-btn:hover {
             border-color: #667eea;
             background: #f0f3ff;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
         }
 
         .option-btn:hover:before {
@@ -143,19 +136,21 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 12px;
-            padding: 18px 40px;
-            font-size: 18px;
+            border-radius: 15px;
+            padding: 20px 50px;
+            font-size: 20px;
             font-weight: 600;
             cursor: pointer;
             width: 100%;
-            margin-top: 20px;
+            max-width: 400px;
+            margin: 30px auto 0;
+            display: block;
             transition: all 0.3s ease;
         }
 
         .start-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
         }
 
         .result-container {
@@ -170,18 +165,29 @@
 
         .result-title {
             color: #333;
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         .recommendation {
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 20px;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
             text-align: left;
-            border-left: 5px solid #667eea;
+            border-left: 6px solid #667eea;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+            color: inherit;
+        }
+
+        .recommendation:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
         }
 
         .recommendation:last-of-type {
@@ -190,8 +196,8 @@
 
         .recommendation h3 {
             color: #667eea;
-            font-size: 20px;
-            margin-bottom: 10px;
+            font-size: 24px;
+            margin-bottom: 15px;
         }
 
         .recommendation:last-of-type h3 {
@@ -200,31 +206,69 @@
 
         .recommendation p {
             color: #666;
-            line-height: 1.6;
-            font-size: 15px;
+            line-height: 1.8;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .recommendation .read-more {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        .recommendation:last-of-type .read-more {
+            color: #764ba2;
         }
 
         .emoji {
-            font-size: 40px;
-            margin-bottom: 15px;
+            font-size: 60px;
+            margin-bottom: 20px;
         }
 
         .restart-btn {
             background: white;
             color: #667eea;
-            border: 2px solid #667eea;
-            border-radius: 12px;
-            padding: 15px 30px;
-            font-size: 16px;
+            border: 3px solid #667eea;
+            border-radius: 15px;
+            padding: 18px 40px;
+            font-size: 18px;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 30px;
             transition: all 0.3s ease;
         }
 
         .restart-btn:hover {
             background: #667eea;
             color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            .question-text {
+                font-size: 22px;
+            }
+
+            .option-btn {
+                padding: 20px;
+                font-size: 16px;
+            }
+
+            .recommendation h3 {
+                font-size: 20px;
+            }
         }
     </style>
 </head>
@@ -236,11 +280,10 @@
 
         <!-- 시작 화면 -->
         <div class="question-container active" id="intro">
-            <h1>📰 사보 맞춤 추천</h1>
+            <h1>📰 당신을 위한 삼천리 사보 칼럼을 추천해 드립니다!</h1>
             <p class="intro-text">
                 간단한 질문에 답하시면<br>
-                당신에게 딱 맞는 사보 칼럼 2개를 추천해드립니다!<br>
-                <strong>총 6개의 질문</strong>이 준비되어 있습니다.
+                당신에게 딱 맞는 사보 칼럼을 추천해드립니다!
             </p>
             <button class="start-btn" onclick="startSurvey()">시작하기</button>
         </div>
@@ -251,10 +294,10 @@
             <div class="question-text">아침에 출근하면 가장 먼저 하는 일은?</div>
             <div class="options">
                 <button class="option-btn" onclick="answer(1, 'A')">
-                    ☕ 동료들과 소소한 이야기를 나눈다
+                    📰 회사 뉴스 확인하거나 오늘 할 일 정리
                 </button>
                 <button class="option-btn" onclick="answer(1, 'B')">
-                    📝 오늘의 할 일 목록을 정리한다
+                    ☕ 동료들과 인사하며 안부 묻기
                 </button>
             </div>
         </div>
@@ -265,10 +308,10 @@
             <div class="question-text">점심시간, 당신의 스타일은?</div>
             <div class="options">
                 <button class="option-btn" onclick="answer(2, 'A')">
-                    🍽️ 동료들과 함께 맛집 탐방
+                    🍽️ 새로운 맛집 찾아 탐방
                 </button>
                 <button class="option-btn" onclick="answer(2, 'B')">
-                    🎧 혼자만의 조용한 시간
+                    🎧 동료들과 수다 떨기
                 </button>
             </div>
         </div>
@@ -279,10 +322,10 @@
             <div class="question-text">주말을 보내는 당신의 방식은?</div>
             <div class="options">
                 <button class="option-btn" onclick="answer(3, 'A')">
-                    🏠 집에서 편안하게 휴식
+                    🚗 드라이브나 여행 떠나기
                 </button>
                 <button class="option-btn" onclick="answer(3, 'B')">
-                    🚗 밖으로 나가서 활동적인 시간
+                    🏠 집에서 혼자 또는 가족과 함께 휴식하며 취미생활
                 </button>
             </div>
         </div>
@@ -290,13 +333,16 @@
         <!-- 질문 4 -->
         <div class="question-container" id="q4">
             <div class="question-number">질문 4/6</div>
-            <div class="question-text">새로운 정보를 얻는 방법은?</div>
+            <div class="question-text">SNS에 올리고 싶은 순간은?</div>
             <div class="options">
                 <button class="option-btn" onclick="answer(4, 'A')">
-                    💬 사람들과의 대화를 통해
+                    📸 멋진 풍경이나 특별한 장면
                 </button>
                 <button class="option-btn" onclick="answer(4, 'B')">
-                    📚 책이나 기사를 읽으면서
+                    🍽️ 맛있는 음식 발견
+                </button>
+                <button class="option-btn" onclick="answer(4, 'C')">
+                    👨‍👩‍👧 가족이나 친구와의 특별한 순간
                 </button>
             </div>
         </div>
@@ -304,13 +350,16 @@
         <!-- 질문 5 -->
         <div class="question-container" id="q5">
             <div class="question-number">질문 5/6</div>
-            <div class="question-text">저녁 약속을 잡는다면?</div>
+            <div class="question-text">회사에서 궁금한 것은?</div>
             <div class="options">
                 <button class="option-btn" onclick="answer(5, 'A')">
-                    🍕 새로운 맛집 방문
+                    👥 다른 부서는 어떤 일을 하는지
                 </button>
                 <button class="option-btn" onclick="answer(5, 'B')">
-                    🎨 전시회나 공연 관람
+                    🆕 회사 내 구성원들 소개
+                </button>
+                <button class="option-btn" onclick="answer(5, 'C')">
+                    👨‍👩‍👧 동료 직원들의 취미나 소소한 일상
                 </button>
             </div>
         </div>
@@ -318,13 +367,16 @@
         <!-- 질문 6 -->
         <div class="question-container" id="q6">
             <div class="question-number">질문 6/6</div>
-            <div class="question-text">어떤 이야기에 더 공감하나요?</div>
+            <div class="question-text">출퇴근길에 주로 하는 일은?</div>
             <div class="options">
                 <button class="option-btn" onclick="answer(6, 'A')">
-                    👨‍👩‍👧‍👦 동료의 가족 이야기나 일상
+                    📊 뉴스나 회사 소식 확인
                 </button>
                 <button class="option-btn" onclick="answer(6, 'B')">
-                    🎭 전문가의 문화 인사이트
+                    🎨 여행·취미 콘텐츠 둘러보기
+                </button>
+                <button class="option-btn" onclick="answer(6, 'C')">
+                    💡 유용한 생활 정보 찾아보기
                 </button>
             </div>
         </div>
@@ -344,25 +396,55 @@
         const totalQuestions = 6;
 
         const columns = {
-            department: {
-                title: '🏢 부서 탐방',
-                description: '우리 회사 동료들의 생생한 이야기를 만나보세요. 각 부서의 업무와 분위기, 그리고 함께 일하는 사람들의 진솔한 경험담이 담겨있습니다.'
+            hotissue: {
+                title: '🏆 핫이슈',
+                description: '삼천리, 2026년 한국에서 가장 존경받는 기업 도시가스 부문 1위! 23년 연속 선정의 영예를 함께 확인해보세요.',
+                url: 'http://sabo.samchully.co.kr/202602/special06.php'
             },
-            travel: {
-                title: '🚗 여행 & 드라이브',
-                description: '주말 드라이브 코스부터 여행지 추천까지! 자동차와 함께하는 특별한 여행 이야기로 다음 휴가를 계획해보세요.'
+            newhire: {
+                title: '🌟 2026 삼천리 신입사원 입문교육',
+                description: '새롭게 삼천리 가족이 된 2026년 신입사원들의 입문교육 현장과 열정 가득한 첫걸음을 만나보세요.',
+                url: 'http://sabo.samchully.co.kr/202602/special02.php'
             },
-            restaurant: {
-                title: '🍴 맛집 탐방',
-                description: '점심 메뉴 고민은 이제 그만! 동료들이 직접 다녀온 맛집 리뷰와 숨은 맛집 정보를 공유합니다.'
+            safety: {
+                title: '💡 생활안전이야기',
+                description: '겨울철 실내 환기의 중요성! 건강하고 안전한 생활을 위한 실용적인 팁을 알려드립니다.',
+                url: 'https://sabo.samchully.co.kr/202602/special01.php'
             },
-            culture: {
-                title: '🎭 이달의 문화',
-                description: '전시, 공연, 영화 등 풍성한 문화 생활을 위한 큐레이션. 트렌디한 문화 소식과 깊이 있는 리뷰를 만나보세요.'
+            dreamteam: {
+                title: '🏢 우리는 드림팀',
+                description: '삼천리 F/C개발팀의 생생한 이야기! 각 부서의 업무와 분위기, 그리고 함께 일하는 사람들의 진솔한 경험담을 만나보세요.',
+                url: 'http://sabo.samchully.co.kr/202602/people01.php'
+            },
+            inside: {
+                title: '💭 삼천리人SIDE',
+                description: '삼천리그룹 임직원들이 요즘 느끼는 감정은? 동료들의 솔직한 마음과 일상 속 진솔한 이야기를 공유합니다.',
+                url: 'http://sabo.samchully.co.kr/202602/people04.php'
+            },
+            photo: {
+                title: '📸 삼천리 직원이 쓴 사진촬영 노하우',
+                description: '여행과 일상을 더욱 특별하게! 삼천리 직원이 직접 알려주는 사진 촬영 꿀팁과 노하우를 배워보세요.',
+                url: 'http://sabo.samchully.co.kr/202602/people05.php'
             },
             family: {
-                title: '👨‍👩‍👧‍👦 우리 가족 이야기',
-                description: '동료들의 따뜻한 가족 이야기와 일상 속 소소한 행복. 공감과 위로가 되는 진솔한 이야기들이 기다립니다.'
+                title: '👨‍👩‍👧‍👦 가족은 나의힘',
+                description: '삼천리그룹 가족들의 취미박스 챌린지! 동료들의 따뜻한 가족 이야기와 일상 속 소소한 행복을 함께 나눠요.',
+                url: 'http://sabo.samchully.co.kr/202602/people09.php'
+            },
+            travel: {
+                title: '🚗 삼천리 방방곡곡',
+                description: 'BMW i5 M60 Pro와 함께 떠나는 광명동굴 여행! 주말 드라이브 코스로 완벽한 특별한 여행 이야기를 만나보세요.',
+                url: 'http://sabo.samchully.co.kr/202602/life01.php'
+            },
+            food: {
+                title: '🍴 스페셜푸드',
+                description: '살롱드 호우섬 도곡점! 점심 메뉴 고민은 이제 그만, 동료들이 직접 다녀온 맛집 리뷰를 확인해보세요.',
+                url: 'http://sabo.samchully.co.kr/202602/life02.php'
+            },
+            news: {
+                title: '📰 삼천리그룹 주요 뉴스',
+                description: '삼천리그룹의 최신 소식과 주요 성과를 한눈에! 우리 회사의 발전과 변화를 함께 확인하세요.',
+                url: 'http://sabo.samchully.co.kr/202602/life05.php'
             }
         };
 
@@ -394,56 +476,74 @@
         }
 
         function calculateResult() {
-            // 점수 계산
             const scores = {
-                department: 0,
+                hotissue: 0,
+                newhire: 0,
+                safety: 0,
+                dreamteam: 0,
+                inside: 0,
+                photo: 0,
+                family: 0,
                 travel: 0,
-                restaurant: 0,
-                culture: 0,
-                family: 0
+                food: 0,
+                news: 0
             };
 
-            // 질문 1: 출근 후 행동 (사교성)
+            // 질문 1: 아침 출근 후
             if (answers.q1 === 'A') {
-                scores.department += 2;
-                scores.family += 1;
+                scores.hotissue += 2;
+                scores.news += 2;
+            } else {
+                scores.dreamteam += 2;
+                scores.inside += 1;
             }
 
             // 질문 2: 점심 스타일
             if (answers.q2 === 'A') {
-                scores.restaurant += 2;
-                scores.department += 1;
+                scores.food += 2;
+            } else {
+                scores.dreamteam += 1;
+                scores.inside += 2;
             }
 
             // 질문 3: 주말 활동
-            if (answers.q3 === 'B') {
+            if (answers.q3 === 'A') {
                 scores.travel += 2;
-                scores.culture += 1;
+                scores.photo += 2;
+            } else {
+                scores.family += 2;
+            }
+
+            // 질문 4: SNS 순간
+            if (answers.q4 === 'A') {
+                scores.photo += 2;
+                scores.travel += 1;
+            } else if (answers.q4 === 'B') {
+                scores.food += 2;
+            } else {
+                scores.family += 2;
+            }
+
+            // 질문 5: 회사에서 궁금한 것
+            if (answers.q5 === 'A') {
+                scores.dreamteam += 2;
+            } else if (answers.q5 === 'B') {
+                scores.newhire += 2;
+                scores.inside += 2;
             } else {
                 scores.family += 1;
+                scores.inside += 2;
             }
 
-            // 질문 4: 정보 습득 방식
-            if (answers.q4 === 'A') {
-                scores.department += 2;
-                scores.restaurant += 1;
-            } else {
-                scores.culture += 2;
-            }
-
-            // 질문 5: 저녁 약속
-            if (answers.q5 === 'A') {
-                scores.restaurant += 2;
-            } else {
-                scores.culture += 2;
-            }
-
-            // 질문 6: 공감 포인트
+            // 질문 6: 출퇴근길 활동
             if (answers.q6 === 'A') {
-                scores.family += 2;
-                scores.department += 1;
+                scores.hotissue += 2;
+                scores.news += 2;
+            } else if (answers.q6 === 'B') {
+                scores.photo += 1;
+                scores.travel += 2;
             } else {
-                scores.culture += 2;
+                scores.safety += 2;
             }
 
             // 상위 2개 추출
@@ -459,10 +559,11 @@
             const resultHTML = recommendations.map(colKey => {
                 const col = columns[colKey];
                 return `
-                    <div class="recommendation">
+                    <a href="${col.url}" target="_blank" class="recommendation">
                         <h3>${col.title}</h3>
                         <p>${col.description}</p>
-                    </div>
+                        <div class="read-more">👉 지금 바로 읽어보기</div>
+                    </a>
                 `;
             }).join('');
 
