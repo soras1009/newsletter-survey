@@ -422,11 +422,12 @@
     </div>
 
     <script>
-        // ⚠️ 여기에 Google Apps Script 배포 URL을 입력하세요
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyKfF8u7DclDJWY0NfTknnUQmHc6P6-YtUxP79PNlb2L5z93o--XrGF1yXf12gwali7Kg/exec';
+        // Google Apps Script 배포 URL
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby_gjWhPIat4awOMlZzoxxXsr000fphyzfEDaccD4RKxbRVyi7dEgxja6pvxMGKDMbE3w/exec';
 
         let answers = {};
         let currentQuestion = 0;
+        let sessionId = '';
         const totalQuestions = 6;
 
         const columns = {
@@ -482,7 +483,13 @@
             }
         };
 
+        // 세션 ID 생성
+        function generateSessionId() {
+            return 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+
         function startSurvey() {
+            sessionId = generateSessionId();
             document.getElementById('intro').classList.remove('active');
             document.getElementById('q1').classList.add('active');
             currentQuestion = 1;
@@ -590,15 +597,16 @@
             return sorted.map(item => item[0]);
         }
 
-        // Google Sheets에 데이터 전송
-        async function sendToGoogleSheets(recommendations) {
-            // URL이 설정되지 않았으면 전송하지 않음
-            if (GOOGLE_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbzUwduh67ulg8Qq-wC9yZ39i7Cb0xxJzJvJirmIchCL3miz6kQ2qDTwoRrsN4eR2QweOA/exec') {
+        // Google Sheets에 설문 데이터 전송
+        async function sendSurveyToGoogleSheets(recommendations) {
+            if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_SCRIPT_URL_HERE') {
                 console.log('Google Script URL이 설정되지 않았습니다.');
                 return;
             }
 
             const data = {
+                type: 'survey',
+                sessionId: sessionId,
                 q1: answers.q1,
                 q2: answers.q2,
                 q3: answers.q3,
@@ -618,10 +626,45 @@
                     },
                     body: JSON.stringify(data)
                 });
-                console.log('데이터 전송 완료');
+                console.log('설문 데이터 전송 완료');
             } catch (error) {
-                console.error('데이터 전송 실패:', error);
+                console.error('설문 데이터 전송 실패:', error);
             }
+        }
+
+        // Google Sheets에 클릭 데이터 전송
+        async function sendClickToGoogleSheets(columnKey, columnTitle) {
+            if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_SCRIPT_URL_HERE') {
+                console.log('Google Script URL이 설정되지 않았습니다.');
+                return;
+            }
+
+            const data = {
+                type: 'click',
+                sessionId: sessionId,
+                columnKey: columnKey,
+                columnTitle: columnTitle
+            };
+
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                console.log('클릭 데이터 전송 완료:', columnTitle);
+            } catch (error) {
+                console.error('클릭 데이터 전송 실패:', error);
+            }
+        }
+
+        // 칼럼 클릭 핸들러
+        function handleColumnClick(columnKey) {
+            const column = columns[columnKey];
+            sendClickToGoogleSheets(columnKey, column.title);
         }
 
         function showResult() {
@@ -631,7 +674,10 @@
             const resultHTML = recommendations.map(colKey => {
                 const col = columns[colKey];
                 return `
-                    <a href="${col.url}" target="_blank" class="recommendation">
+                    <a href="${col.url}" 
+                       target="_blank" 
+                       class="recommendation"
+                       onclick="handleColumnClick('${colKey}')">
                         <h3>${col.title}</h3>
                         <p>${col.description}</p>
                         <div class="read-more">👉 지금 바로 읽어보기</div>
@@ -643,13 +689,14 @@
             document.getElementById('result').classList.add('active');
             document.getElementById('progressFill').style.width = '100%';
 
-            // Google Sheets에 조용히 전송
-            sendToGoogleSheets(recommendations);
+            // Google Sheets에 설문 결과 전송
+            sendSurveyToGoogleSheets(recommendations);
         }
 
         function restart() {
             answers = {};
             currentQuestion = 0;
+            sessionId = '';
             document.getElementById('result').classList.remove('active');
             document.getElementById('intro').classList.add('active');
             document.getElementById('progressFill').style.width = '0%';
