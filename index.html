@@ -341,6 +341,9 @@
                 <button class="option-btn" onclick="answer(2, 'B')">
                     🎧 동료들과 수다 떨기
                 </button>
+                <button class="option-btn" onclick="answer(2, 'C')">
+                    😴 낮잠자며 휴식하기
+                </button>
             </div>
         </div>
 
@@ -529,9 +532,11 @@
             // 질문 2: 점심 스타일
             if (answers.q2 === 'A') {
                 scores.food += 2;
-            } else {
+            } else if (answers.q2 === 'B') {
                 scores.dreamteam += 1;
                 scores.inside += 2;
+            } else if (answers.q2 === 'C') {
+                scores.family += 2;
             }
 
             // 질문 3: 주말 활동
