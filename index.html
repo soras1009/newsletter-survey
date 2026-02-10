@@ -422,6 +422,9 @@
     </div>
 
     <script>
+        // ⚠️ 여기에 Google Apps Script 배포 URL을 입력하세요
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyKfF8u7DclDJWY0NfTknnUQmHc6P6-YtUxP79PNlb2L5z93o--XrGF1yXf12gwali7Kg/exec';
+
         let answers = {};
         let currentQuestion = 0;
         const totalQuestions = 6;
@@ -587,8 +590,44 @@
             return sorted.map(item => item[0]);
         }
 
+        // Google Sheets에 데이터 전송
+        async function sendToGoogleSheets(recommendations) {
+            // URL이 설정되지 않았으면 전송하지 않음
+            if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_SCRIPT_URL_HERE') {
+                console.log('Google Script URL이 설정되지 않았습니다.');
+                return;
+            }
+
+            const data = {
+                q1: answers.q1,
+                q2: answers.q2,
+                q3: answers.q3,
+                q4: answers.q4,
+                q5: answers.q5,
+                q6: answers.q6,
+                result1: recommendations[0],
+                result2: recommendations[1]
+            };
+
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                console.log('데이터 전송 완료');
+            } catch (error) {
+                console.error('데이터 전송 실패:', error);
+            }
+        }
+
         function showResult() {
             const recommendations = calculateResult();
+            
+            // 결과 화면 표시
             const resultHTML = recommendations.map(colKey => {
                 const col = columns[colKey];
                 return `
@@ -603,6 +642,9 @@
             document.getElementById('recommendations').innerHTML = resultHTML;
             document.getElementById('result').classList.add('active');
             document.getElementById('progressFill').style.width = '100%';
+
+            // Google Sheets에 조용히 전송
+            sendToGoogleSheets(recommendations);
         }
 
         function restart() {
