@@ -268,6 +268,155 @@
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
         }
 
+        /* 당첨 화면 스타일 */
+        .winner-container {
+            display: none;
+            text-align: center;
+        }
+
+        .winner-container.active {
+            display: block;
+            animation: fadeIn 0.5s ease, celebration 1s ease;
+        }
+
+        @keyframes celebration {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .winner-box {
+            background: linear-gradient(135deg, #ff9a56 0%, #ff6a00 100%);
+            border-radius: 30px;
+            padding: 60px 40px;
+            box-shadow: 0 20px 60px rgba(255, 106, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .winner-box:before {
+            content: '🎉';
+            position: absolute;
+            font-size: 100px;
+            opacity: 0.1;
+            top: -20px;
+            left: -20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .winner-box:after {
+            content: '☕';
+            position: absolute;
+            font-size: 100px;
+            opacity: 0.1;
+            bottom: -20px;
+            right: -20px;
+            animation: float 3s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .winner-title {
+            color: white;
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .winner-emoji {
+            font-size: 100px;
+            margin: 30px 0;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .winner-message {
+            color: white;
+            font-size: 28px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .winner-subtitle {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 20px;
+            margin-bottom: 50px;
+            font-weight: 500;
+        }
+
+        .winner-instruction {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .winner-instruction h3 {
+            color: #ff6a00;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .winner-instruction p {
+            color: #333;
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .email-highlight {
+            background: #fff3e0;
+            color: #ff6a00;
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 20px;
+            margin: 20px 0;
+            display: inline-block;
+        }
+
+        .instruction-steps {
+            text-align: left;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 25px;
+        }
+
+        .instruction-steps li {
+            color: #555;
+            font-size: 16px;
+            line-height: 2;
+            margin-bottom: 10px;
+        }
+
+        .close-btn {
+            background: linear-gradient(135deg, #ff9a56 0%, #ff6a00 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 18px 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 106, 0, 0.4);
+        }
+
         /* 반응형 */
         @media (max-width: 768px) {
             body {
@@ -293,6 +442,27 @@
 
             .character {
                 width: 120px;
+            }
+
+            .winner-title {
+                font-size: 36px;
+            }
+
+            .winner-message {
+                font-size: 22px;
+            }
+
+            .winner-emoji {
+                font-size: 80px;
+            }
+
+            .winner-box {
+                padding: 40px 25px;
+            }
+
+            .email-highlight {
+                font-size: 16px;
+                padding: 12px 20px;
             }
         }
     </style>
@@ -412,6 +582,41 @@
             </div>
         </div>
 
+        <!-- 당첨 화면 -->
+        <div class="winner-container" id="winner">
+            <div class="winner-box">
+                <div class="winner-title">🎉 축! 당첨!! 🎉</div>
+                <div class="winner-emoji">☕</div>
+                <div class="winner-message">
+                    따스한 겨울.<br>
+                    아메리카노 마시고 가실게요
+                </div>
+                <div class="winner-subtitle">(커피쿠폰 증정)</div>
+
+                <div class="winner-instruction">
+                    <h3>📸 이 화면을 캡처해주세요!</h3>
+                    <p>
+                        화면 캡처 후 아래 이메일로 전송해주시면<br>
+                        경품을 보내드립니다.
+                    </p>
+                    
+                    <div class="email-highlight">
+                        ✉️ jwsong@samchully.co.kr
+                    </div>
+
+                    <div class="instruction-steps">
+                        <ol>
+                            <li>📱 이 화면을 스크린샷으로 캡처하기</li>
+                            <li>✉️ jwsong@samchully.co.kr 로 이메일 전송</li>
+                            <li>🎁 경품 수령하기!</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <button class="close-btn" onclick="closeWinner()">칼럼 추천 보기</button>
+            </div>
+        </div>
+
         <!-- 결과 화면 -->
         <div class="result-container" id="result">
             <div class="emoji">🎉</div>
@@ -425,9 +630,14 @@
         // Google Apps Script 배포 URL
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby_gjWhPIat4awOMlZzoxxXsr000fphyzfEDaccD4RKxbRVyi7dEgxja6pvxMGKDMbE3w/exec';
 
+        // 당첨 확률: 500명 중 10명 = 2% (0.02)
+        const WINNING_PROBABILITY = 0.02;
+
         let answers = {};
         let currentQuestion = 0;
         let sessionId = '';
+        let isWinner = false;
+        let recommendations = [];
         const totalQuestions = 6;
 
         const columns = {
@@ -507,7 +717,7 @@
                 document.getElementById(`q${questionNum + 1}`).classList.add('active');
                 updateProgress();
             } else {
-                showResult();
+                checkWinner();
             }
         }
 
@@ -530,7 +740,6 @@
                 news: 0
             };
 
-            // 질문 1: 아침 출근 후
             if (answers.q1 === 'A') {
                 scores.hotissue += 2;
                 scores.news += 2;
@@ -539,7 +748,6 @@
                 scores.inside += 1;
             }
 
-            // 질문 2: 점심 스타일
             if (answers.q2 === 'A') {
                 scores.food += 2;
             } else if (answers.q2 === 'B') {
@@ -549,7 +757,6 @@
                 scores.family += 2;
             }
 
-            // 질문 3: 주말 활동
             if (answers.q3 === 'A') {
                 scores.travel += 2;
                 scores.photo += 2;
@@ -557,7 +764,6 @@
                 scores.family += 2;
             }
 
-            // 질문 4: SNS 순간
             if (answers.q4 === 'A') {
                 scores.photo += 2;
                 scores.travel += 1;
@@ -567,7 +773,6 @@
                 scores.family += 2;
             }
 
-            // 질문 5: 회사에서 궁금한 것
             if (answers.q5 === 'A') {
                 scores.dreamteam += 2;
             } else if (answers.q5 === 'B') {
@@ -578,7 +783,6 @@
                 scores.inside += 2;
             }
 
-            // 질문 6: 출퇴근길 활동
             if (answers.q6 === 'A') {
                 scores.hotissue += 2;
                 scores.news += 2;
@@ -589,7 +793,6 @@
                 scores.safety += 2;
             }
 
-            // 상위 2개 추출
             const sorted = Object.entries(scores)
                 .sort((a, b) => b[1] - a[1])
                 .slice(0, 2);
@@ -597,8 +800,37 @@
             return sorted.map(item => item[0]);
         }
 
+        // 당첨 여부 확인
+        function checkWinner() {
+            recommendations = calculateResult();
+            
+            // 랜덤 추첨 (2% 확률)
+            isWinner = Math.random() < WINNING_PROBABILITY;
+            
+            // Google Sheets에 설문 결과 전송
+            sendSurveyToGoogleSheets(recommendations, isWinner);
+            
+            if (isWinner) {
+                showWinnerScreen();
+            } else {
+                showResult();
+            }
+        }
+
+        // 당첨 화면 표시
+        function showWinnerScreen() {
+            document.getElementById('winner').classList.add('active');
+            document.getElementById('progressFill').style.width = '100%';
+        }
+
+        // 당첨 화면 닫기
+        function closeWinner() {
+            document.getElementById('winner').classList.remove('active');
+            showResult();
+        }
+
         // Google Sheets에 설문 데이터 전송
-        async function sendSurveyToGoogleSheets(recommendations) {
+        async function sendSurveyToGoogleSheets(recommendations, isWinner) {
             if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_SCRIPT_URL_HERE') {
                 console.log('Google Script URL이 설정되지 않았습니다.');
                 return;
@@ -614,7 +846,8 @@
                 q5: answers.q5,
                 q6: answers.q6,
                 result1: recommendations[0],
-                result2: recommendations[1]
+                result2: recommendations[1],
+                isWinner: isWinner ? '⭐당첨' : ''
             };
 
             try {
@@ -667,10 +900,8 @@
             sendClickToGoogleSheets(columnKey, column.title);
         }
 
+        // 일반 결과 화면 표시
         function showResult() {
-            const recommendations = calculateResult();
-            
-            // 결과 화면 표시
             const resultHTML = recommendations.map(colKey => {
                 const col = columns[colKey];
                 return `
@@ -688,20 +919,19 @@
             document.getElementById('recommendations').innerHTML = resultHTML;
             document.getElementById('result').classList.add('active');
             document.getElementById('progressFill').style.width = '100%';
-
-            // Google Sheets에 설문 결과 전송
-            sendSurveyToGoogleSheets(recommendations);
         }
 
         function restart() {
             answers = {};
             currentQuestion = 0;
             sessionId = '';
+            isWinner = false;
+            recommendations = [];
             document.getElementById('result').classList.remove('active');
+            document.getElementById('winner').classList.remove('active');
             document.getElementById('intro').classList.add('active');
             document.getElementById('progressFill').style.width = '0%';
             
-            // 모든 질문 초기화
             for (let i = 1; i <= totalQuestions; i++) {
                 document.getElementById(`q${i}`).classList.remove('active');
             }
